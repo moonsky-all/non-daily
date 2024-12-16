@@ -3,9 +3,12 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  read-f1-gridlist:
-    name: Read f1 gridlist
+  read-details:
+    name: Read-details
     runs-on: ubuntu-latest
+    env:
+      DATASTORE_TARGET: ${{ secrets.DATASTORE_TARGET }}
+      GITHUB_TOKEN: ${{ secrets.DATASTORE_TOKEN }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -21,48 +24,22 @@ jobs:
         run: |
           git config --global user.email "bot@<auto>.com"
           git config --global user.name "GithubBot"
-      - name: Install-deps
-        working-directory: ./
-        continue-on-error: true
+      - name: Store-setup
         run: |
-          corepack enable
-          pwd
-          pnpm install
-      - name: Fetch-gridlist
-        working-directory: ./
-        continue-on-error: true
-        run:
-          pnpm run fetch:gridlist
-      - name: Git-commit-gridlist
-        working-directory: ./
-        continue-on-error: true
+          echo $DATASTORE_TARGET
+          rm -fr .git
+          mkdir data
+          cd data
+          git init
+          TEMP_BRANCH_NAME=dev-$(date +"%Y%m%d-%H%M%S")
+          git branch -M $TEMP_BRANCH_NAME
+          git remote add origin $DATASTORE_TARGET
+          git branch --set-upstream-to=origin/$TEMP_BRANCH_NAME $TEMP_BRANCH_NAME
+      - name: Test-commit
+        working-directory: ./data
         run: |
+          echo "[]" >> touch.json
           git add .
           git commit -m "Auto-fetch gridlist [ci skip]"
-          git pull --rebase
-          git push
-      - name: Fetch-limit-up
-        working-directory: ./
-        continue-on-error: true
-        run:
-          pnpm run fetch:limit-up
-      - name: Git-commit-limit-up
-        working-directory: ./
-        continue-on-error: true
-        run: |
-          git add .
-          git commit -m "Auto-fetch limit-up [ci skip]"
-          git pull --rebase
-          git push
-      - name: Fetch-remaining
-        working-directory: ./
-        continue-on-error: true
-        run:
-          pnpm run fetch
-      - name: Git-commit-remaining
-        working-directory: ./
-        run: |
-          git add .
-          git commit -m "Auto-fetch remaining [ci skip]"
           git pull --rebase
           git push

@@ -1,0 +1,1 @@
+{"version":3,"file":"test.cjs","sources":["webpack://@financier/runner/./src/test.ts"],"sourcesContent":["import * as os from \"node:os\";\n\nconsole.log(os.platform());"],"names":["console","os"],"mappings":"AAEAA,QAAQ,GAAG,CAACC,A,mBAAAA,QAAW"}

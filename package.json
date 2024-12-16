@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "fetch:gridlist": "cross-env TZ=Asia/Shanghai RUN_MODE=FETCH_DETAILS_AFTER_CLOSED FETCH_TYPE=gridlist node dist/fetch/main.js",
+    "fetch:limit-up": "cross-env TZ=Asia/Shanghai RUN_MODE=FETCH_DETAILS_AFTER_CLOSED FETCH_TYPE=limit-up node dist/fetch/main.js",
+    "fetch": "cross-env TZ=Asia/Shanghai RUN_MODE=FETCH_DETAILS_AFTER_CLOSED node dist/fetch/main.js",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
