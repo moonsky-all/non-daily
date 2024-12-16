@@ -30,6 +30,7 @@ jobs:
           rm -fr .git
           mkdir data
           cd data
+          echo "[]" >> touch.json
           git init
           TEMP_BRANCH_NAME=dev-$(date +"%Y%m%d-%H%M%S")
           git branch -M $TEMP_BRANCH_NAME
