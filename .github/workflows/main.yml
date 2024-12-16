@@ -22,6 +22,7 @@ jobs:
         working-directory: ./
         continue-on-error: true
         run: |
+          git config --global init.defaultBranch main
           git config --global user.email "bot@<auto>.com"
           git config --global user.name "GithubBot"
       - name: Store-setup
@@ -36,4 +37,4 @@ jobs:
           git commit -m "Auto-fetch gridlist [ci skip]"
           TEMP_BRANCH_NAME=dev-$(date +"%Y%m%d-%H%M%S")
           git remote add origin $DATASTORE_TARGET
-          git push -u origin $TEMP_BRANCH_NAME
+          git push -u origin main $TEMP_BRANCH_NAME
