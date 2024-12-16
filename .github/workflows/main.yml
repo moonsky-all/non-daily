@@ -35,6 +35,5 @@ jobs:
           git add .
           git commit -m "Auto-fetch gridlist [ci skip]"
           TEMP_BRANCH_NAME=dev-$(date +"%Y%m%d-%H%M%S")
-          git branch -M $TEMP_BRANCH_NAME
           git remote add origin $DATASTORE_TARGET
-          git branch --set-upstream-to=origin/$TEMP_BRANCH_NAME $TEMP_BRANCH_NAME
+          git push -u origin $TEMP_BRANCH_NAME
